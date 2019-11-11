@@ -2,6 +2,7 @@ import datetime
 from dateutil import parser
 from infrastructure.switchlang import switch
 import services.data_service as svc
+import program
 import infrastructure.state as state
 from colorama import Fore
 import infrastructure.state as state
@@ -45,7 +46,26 @@ def create_account():
         return
 
 
-    background = input('What is your background ?')
+    print('What is your Department ? Choose')
+    choice = int(input('''
+    1. Computer Science
+    2. Mechanical
+    3. Chemical
+    4. Electrical
+    5. Math
+    6. Biology
+    7. Physics
+    8. Humanities? '''))
+    Department = ''
+    if choice == 1: Department = 'CSE'
+    elif choice == 2: Department = 'MEC'
+    elif choice == 3: Department = 'CHE'
+    elif choice == 4: Department = 'ELE'
+    elif choice == 5: Department = 'MAT'
+    elif choice == 6: Department = 'BIO'
+    elif choice == 7: Department = 'PHY'
+    elif choice == 8: Department = 'HUM'
+ 
     publications = []
     grants = []
     awards = []
@@ -78,7 +98,11 @@ def create_account():
         yy = input  ('Got some more? [y/n]').lower().startswith('y')
         if yy is not True:
             break
-    state.active_account = svc.create_account(name, email, background, publications, grants, awards, teachings)
+    nLeaves = 12
+    cur = program.getConn().cursor()
+    cur.execute("insert into faculty(ID, noOfLeaves, department) values (%s, %s, %s);  ", (str(email), int(nLeaves), str(Department)))
+    state.active_account = svc.create_account(name, email, Department, publications, grants, awards, teachings)
+    program.getConn().commit()
     success_msg(f"Created new account with id {state.active_account.id}.")
 
 

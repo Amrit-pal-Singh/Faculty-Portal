@@ -1,27 +1,26 @@
 import psycopg2
+import program
 
-conn = psycopg2.connect(database = "project", user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432")
-print("Opened database successfully")
 
-cur = conn.cursor()
+cur = program.getConn().cursor()
 cur.execute('''SELECT now();''')
 print("Table created successfully", cur.fetchone())
-# cur.execute('''
-#     create table department(
-#         name VARCHAR(50) NOT NULL UNIQUE,
-#         PRIMARY_KEY name
-#         );
-# ''')
+cur.execute('''
+    create table department(
+        name VARCHAR(50) NOT NULL UNIQUE,
+        id VARCHAR(50) NOT NULL PRIMARY KEY
+        );
+''')
 
 
-# cur.execute('''
-#     create table faculty(
-#         Id VARCHAR(50) NOT NULL PRIMARY KEY,
-#         noOfLeaves integer NOT NULL,
-#         department VARCHAR(25) NOT NULL,
-#         FOREIGN KEY(department) references department(name)
-#     );
-# ''')
+cur.execute('''
+    create table faculty(
+        Id VARCHAR(50) NOT NULL PRIMARY KEY,
+        noOfLeaves integer NOT NULL,
+        department VARCHAR(50) NOT NULL,
+        FOREIGN KEY(department) references department(id)
+    );
+''')
 
 cur.execute('''
     create table HOD(
@@ -29,44 +28,44 @@ cur.execute('''
         DepartName VARCHAR(50) NOT NULL,
         startTime timestamp,
         PRIMARY KEY(facultyId, DepartName),
-        FOREIGN KEY(DepartName) references department(name),
+        FOREIGN KEY(DepartName) references department(id),
         FOREIGN KEY(facultyId) references faculty(Id)
     );
 ''')
 
-# cur.execute('''
-#     create table historyOfHod(
-#         departmentName VARCHAR(25) NOT NULL,
-#         facultyId VARCHAR(50) NOT NULL,
-#         startTime timestamp,
-#         endTime timestamp,
-#         PRIMARY KEY(departmentName, facultyId),
-#         FOREIGN KEY(departmentName) references department(name),
-#         FOREIGN KEY(facultyId) references faculty(Id)
-#     );
-# ''')
+cur.execute('''
+    create table historyOfHod(
+        departmentName VARCHAR(50) NOT NULL,
+        facultyId VARCHAR(50) NOT NULL,
+        startTime timestamp,
+        endTime timestamp,
+        PRIMARY KEY(departmentName, facultyId),
+        FOREIGN KEY(departmentName) references department(id),
+        FOREIGN KEY(facultyId) references faculty(Id)
+    );
+''')
 
-# cur.execute('''
-#     create table crossFaculty(
-#         facultyId VARCHAR(50) NOT NULL,
-#         position VARCHAR(50) NOT NULL PRIMARY KEY,
-#         startTime timestamp,
-#         FOREIGN KEY(facultyId) references faculty(Id)
-#     )
-# ''')
+cur.execute('''
+    create table crossFaculty(
+        facultyId VARCHAR(50) NOT NULL,
+        position VARCHAR(50) NOT NULL PRIMARY KEY,
+        startTime timestamp,
+        FOREIGN KEY(facultyId) references faculty(Id)
+    )
+''')
 
-# cur.execute('''
-#     create table historyOfCrossCut(
-#         facultyId VARCHAR(50) NOT NULL,
-#         position VARCHAR(50) NOT NULL,
-#         startTime timestamp,
-#         endTime timestamp,
-#         PRIMARY KEY(facultyId, position),
-#         FOREIGN KEY(facultyId) references faculty(Id),
-#         FOREIGN KEY(position) references crossFaculty(position)
-#     )
-# ''')
+cur.execute('''
+    create table historyOfCrossCut(
+        facultyId VARCHAR(50) NOT NULL,
+        position VARCHAR(50) NOT NULL,
+        startTime timestamp,
+        endTime timestamp,
+        PRIMARY KEY(facultyId, position),
+        FOREIGN KEY(facultyId) references faculty(Id),
+        FOREIGN KEY(position) references crossFaculty(position)
+    )
+''')
 
 
-conn.commit()
-conn.close()
+program.getConn().commit()
+program.getConn().close()

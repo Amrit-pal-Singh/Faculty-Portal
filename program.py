@@ -1,6 +1,13 @@
 from colorama import Fore
+import psycopg2
 import program_profs
 import data.mongo_setup as mongo_setup
+
+conn = psycopg2.connect(database = "project", user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432")
+print("Opened database successfully")
+    
+def getConn():
+    return conn
 
 def main():
     mongo_setup.global_init()
