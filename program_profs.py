@@ -8,6 +8,7 @@ from colorama import Fore
 import infrastructure.state as state
 
 
+
 def run():
     print('************* Welcome Professor ************* ')
     print()
@@ -131,8 +132,6 @@ def log_into_account():
 
     state.active_account = account
     print(state.active_account.id)
-    state.active_account._id = require('mongodb').ObjectId("4c8a331bda76c559ef000004")
-    print(state.active_account.id)    
     success_msg('Logged in successfully.')
 
 

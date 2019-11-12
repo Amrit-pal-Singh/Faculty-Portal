@@ -8,12 +8,27 @@ def create_account(name, email, background, publications, grants, awards, teachi
     owner = Owner()
     owner.name = name
     owner.email = email
-    owner.background = background
+    owner.Department = background
     owner.publication = publications
     owner.grants = grants
     owner.awards = awards
     owner.teaching = teaching
     owner.save()
+    return owner
+
+def create_account_by_flask(name, email, department, password) -> Owner:
+    owner = Owner()
+    owner.name = name
+    owner.email = email
+    owner.Department = department
+    owner.password = password
+    owner.save()
+    return owner
+
+
+
+def find_account_by_email_and_password(email: str, password: str) -> Owner:
+    owner = Owner.objects(email=email, password = password).first()
     return owner
 
 
