@@ -11,6 +11,7 @@ class Owner(mongoengine.Document):
     grants = mongoengine.ListField()
     awards = mongoengine.ListField()
     teaching = mongoengine.ListField()
+    miss = mongoengine.ListField()
 
     meta = {
         'db_alias': 'chor',

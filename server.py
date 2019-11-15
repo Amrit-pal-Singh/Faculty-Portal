@@ -26,10 +26,94 @@ def connectToDB():
 @app.route('/')
 def index():
     if(state.active_account != None):
-        obj = (state.active_account)
-        return render_template('info.html', object = obj)
+        info = svc.getInfo(state.active_account.email)
+        print(len(info['publication']))
+        return render_template('info.html', info = info)
     else:
         return render_template('login.html')
+
+
+
+@app.route('/edit', methods = ['GET', 'POST'])
+def edit():
+    if(state.active_account == None):
+        return render_template('login.html')
+    if request.method == 'POST':
+        print('(((((((((((((((((((9mp)))))))))))))))))))')
+        if 'Publications' in request.form:
+            pub = request.form['infoProf']
+            svc.addPublication(state.active_account.email, str(pub))
+            return redirect(url_for('index'))
+        if 'Grants' in request.form:
+            pub = request.form['infoProf']
+            svc.addGrants(state.active_account.email, str(pub))
+            return redirect(url_for('index'))
+        if 'Awards' in request.form:
+            pub = request.form['infoProf']
+            svc.addAwards(state.active_account.email, str(pub))
+            return redirect(url_for('index'))
+        if 'Misslaneous' in request.form:
+            pub = request.form['infoProf']
+            svc.addMiss(state.active_account.email, str(pub))
+            return redirect(url_for('index'))
+        if 'Teaching' in request.form:
+            pub = request.form['infoProf']
+            svc.addTeaching(state.active_account.email, str(pub))
+            return redirect(url_for('index'))
+        if 'PublicationsD' in request.form:
+            pub = request.form['delete']
+            try:
+                pubI = int(pub)-1
+                pubValue = svc.find_account_by_email(state.active_account.email).publication[pubI]
+                svc.deletePublication(state.active_account.email, pubValue)
+                print('########', )       
+            except:
+                return render_template('edit.html', error='Unvalid index')
+            return redirect(url_for('index'))
+        if 'GrantsD' in request.form:
+            pub = request.form['delete']
+            try:
+                pubI = int(pub)-1
+                pubValue = svc.find_account_by_email(state.active_account.email).grants[pubI]
+                svc.deleteGrants(state.active_account.email, pubValue)
+                print('########', )       
+            except:
+                return render_template('edit.html', error='Unvalid index')
+            return redirect(url_for('index'))
+        if 'AwardsD' in request.form:
+            pub = request.form['delete']
+            try:
+                pubI = int(pub)-1
+                pubValue = svc.find_account_by_email(state.active_account.email).awards[pubI]
+                svc.deleteAwards(state.active_account.email, pubValue)
+                print('########', )       
+            except:
+                return render_template('edit.html', error='Unvalid index')
+            return redirect(url_for('index'))
+        if 'MisslaneousD' in request.form:
+            pub = request.form['delete']
+            try:
+                pubI = int(pub)-1
+                pubValue = svc.find_account_by_email(state.active_account.email).miss[pubI]
+                svc.deleteMiss(state.active_account.email, pubValue)
+                print('########', )       
+            except:
+                return render_template('edit.html', error='Unvalid index')
+            return redirect(url_for('index'))
+        if 'TeachingD' in request.form:
+            pub = request.form['delete']
+            try:
+                pubI = int(pub)-1
+                pubValue = svc.find_account_by_email(state.active_account.email).teaching[pubI]
+                svc.deleteTeaching(state.active_account.email, pubValue)
+                print('########', )       
+            except:
+                return render_template('edit.html', error='Unvalid index')
+            return redirect(url_for('index'))
+        else:
+            return render_template('edit.html', error= 'Error in the Request')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    return render_template('edit.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,8 +134,8 @@ def login():
 
 @app.route('/logout')
 def logout():
-   state.active_account = None
-   return redirect(url_for('login'))
+    state.active_account = None
+    return redirect(url_for('login'))
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():

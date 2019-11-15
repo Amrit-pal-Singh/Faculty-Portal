@@ -8,16 +8,52 @@
         <table>
             <tr>
                 <td>Username:</td>
-                <td>{{ object.name }}</td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td>{{ object.password }}</td>
+                <td>{{ info['name'] }}</td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td>{{ object.email }}</td>
+                <td>{{ info['email'] }}</td>
+            </tr>
+            <tr>
+                <td>Department:</td>
+                <td>{{ info['department'] }}</td>
             </tr>
         </table>
+    </div>
+    <div>
+        {% if  info['publication']|length > 0 %}
+            <h2>Publications</h2>
+            {% for i in range( info['publication']|length ) %}
+                <p> {{ i+1 }}. {{info['publication'][i]}}</p>
+            {% endfor %}
+        {% endif %}
+
+        {% if  info['grants']|length > 0 %}
+            <h2>Grants</h2>
+            {% for i in range( info['grants']|length ) %}
+                <p> {{ i+1 }}. {{info['grants'][i]}}</p>
+            {% endfor %}
+        {% endif %}
+
+        {% if  info['awards']|length > 0 %}
+            <h2>Awards</h2>
+            {% for i in range( info['awards']|length ) %}
+                <p>{{ i+1 }}. {{info['awards'][i]}}</p>
+            {% endfor %}
+        {% endif %}
+        
+        {% if  info['teaching']|length > 0 %}
+            <h2>Teaching</h2>
+            {% for i in range( info['teaching']|length ) %}
+                <p>{{ i+1 }}. {{info['teaching'][i]}}</p>
+            {% endfor %}
+        {% endif %}
+        
+        {% if  info['miss']|length > 0 %}
+            <h2>Misslaneous</h2>
+            {% for i in range( info['miss']|length ) %}
+                <p>{{ i+1 }}. {{info['miss'][i]}}</p>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
