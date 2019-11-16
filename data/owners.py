@@ -17,3 +17,13 @@ class Owner(mongoengine.Document):
         'db_alias': 'chor',
         'collection': 'owners'
     }
+
+
+# 
+# DEANAA
+# DEANRA
+# DEANSA
+# ADEANFA
+# ADEANAA
+# ADEANRA
+# ADEANSA

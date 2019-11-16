@@ -2,7 +2,7 @@ from typing import List, Optional
 import datetime
 import bson
 from data.owners import Owner
-
+from data.path import Path
 
 def create_account(name, email, background, publications, grants, awards, teaching) -> Owner:
     owner = Owner()
@@ -24,6 +24,14 @@ def create_account_by_flask(name, email, department, password) -> Owner:
     owner.password = password
     owner.save()
     return owner
+
+
+def savePath(pp):
+    path = Path()
+    path.admin = 'admin'
+    path.path = pp
+    path.save()
+
 
 def deletePublication(emailid, pub):
     Owner.objects(email = emailid).update_one(pull__publication=pub)
@@ -56,8 +64,6 @@ def addTeaching(emailid, pub):
 def addMiss(emailid, pub):
     Owner.objects(email = emailid).update_one(push__miss=pub)
 
-
-
 def find_account_by_email_and_password(email: str, password: str) -> Owner:
     owner = Owner.objects(email=email, password = password).first()
     return owner
@@ -82,4 +88,14 @@ def getInfo(emailid):
     }
     return info
 
+def isPathSet():
+    return Path.objects.count()
 
+def getPath():
+    path_ = Path.objects(admin='admin').first()
+    if(path_ is not None):
+        return path_.path
+    return 'NULL'
+        
+def changePath(pp):
+    Path.objects(admin = 'admin').update_one(set__path=pp)

@@ -1,5 +1,9 @@
 {% extends 'layout.html' %}
 
+{% block nav %}
+<a href="{{ url_for('edit') }}"><i class="fas fa-plus"></i>Edit Info</a>
+{% endblock %}
+
 {% block content %}
 
 <h2>Edit Profile</h2>
