@@ -43,15 +43,12 @@ language plpgsql;
 
 
 
-drop trigger HodChangeLog1 on HOD;
-
 create TRIGGER HodChangeLog1
 before update
 on HOD
 for each row
 execute procedure changedHodTriggerUpdate();
 
-drop trigger HodChangeLog2 on HOD;
 
 
 create TRIGGER HodChangeLog2
@@ -121,15 +118,12 @@ language plpgsql;
 
 
 
-drop trigger CrossChangeLog1 on crossFaculty;
-
 create TRIGGER CrossChangeLog1
 before update
 on crossFaculty
 for each row
 execute procedure changedCrossTriggerUpdate();
 
-drop trigger CrossChangeLog2 on crossFaculty; 
 
 create TRIGGER CrossChangeLog2
 before delete

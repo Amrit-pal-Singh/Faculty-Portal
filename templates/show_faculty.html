@@ -13,12 +13,14 @@
         <tr>
             <th>ID</th>
             <th>Leaves Left</th>
+            <th>Next Year Leaves Left</th>
             <th>Department</th>
         </tr>
         {% for x in items %}
             <tr>
                 <td>{{x[0]}}</td>
                 <td>{{x[1]}}</td>
+                <td>{{x[3]}}</td>
                 <td>{{x[2]}}</td>
             </tr>
         {% endfor %} 

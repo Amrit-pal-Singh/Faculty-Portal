@@ -147,9 +147,31 @@ body.loggedin {
   padding: 5px;
   margin: 0 0 10px 0;
 }
-
-
-
+.button1 {
+    background-color: rgb(114, 150, 204);
+    border: none;
+    color: white;
+    width: 30%;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+.block {
+    display: block;
+    width: 20%;
+    border: none;
+    background-color: #4CAF50;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }
+ 
     ul {
     list-style-type: none;
     margin: 0;
@@ -236,3 +258,15 @@ body.loggedin {
         display: block;
       }
       
+
+
+
+    #popleave{
+    display: none;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: #9ca1a5;
+    
+}
