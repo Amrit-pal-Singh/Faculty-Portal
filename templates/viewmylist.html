@@ -20,20 +20,25 @@
         <td>{{r[5]}}</td>
         
     </tr>
-        
+    {% if r[2] != r[4] %}
     <tr>
-        
         <th>Currently With</th>
         <td>{{r[3]}}</td>
         
     </tr>
+    {% endif %}
 
+    {% if r[2] == r[4] %}
     <tr>
-        
-            <th>Currently With ID</th>
-            <td>{{r[4]}}</td>
-            
+        <th>Redirected by</th>
+        <td>{{r[3]}}</td>
     </tr>
+    {% endif %}
+    <tr>
+            <th>Currently With ID</th>
+            <td>{{r[4]}}</td> 
+    </tr>
+
     <tr>
         
         <th>last Updated</th>
@@ -42,9 +47,16 @@
     </tr>
     <tr>
         
-        <th>Number of Leaves Borrowing</th>
-        <td>{{r[8]}}</td>
+        <th>Path</th>
+        <td>{{r[7]}}</td>
+        
     </tr>
+    {% if r[8]!=0 %}
+    <tr>
+        <th>Request for borrowing next year leaves<br>Number of Leaves Borrowing</th>
+        <td><br>{{r[8]}}</td>
+    </tr>
+    {% endif %}
 
 </table> 
 

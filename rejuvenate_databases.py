@@ -3,7 +3,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from getpass import getpass
 pss = ""
 def connectdb(s1):
-	return psycopg2.connect(database=s1, user="postgres", password=pss, host = "127.0.0.1", port = "5432")
+	return psycopg2.connect(database=s1, user="postgres", password=pss)
 
 def create_db():
 	con = connectdb('postgres')

@@ -42,9 +42,16 @@
     </tr>
     <tr>
         
-        <th>Number of Leaves Borrowing</th>
-        <td>{{r[8]}}</td>
+        <th>Path</th>
+        <td>{{r[7]}}</td>
+        
     </tr>
+    {% if r[8]!=0 %}
+    <tr>
+        <th>Request for borrowing next year leaves<br>Number of Leaves Borrowing</th>
+        <td><br>{{r[8]}}</td>
+    </tr>
+    {% endif %}
 
 </table> 
 <p><a href="{{url_for('showcomments',type= r[0])}}">comments</a></p>

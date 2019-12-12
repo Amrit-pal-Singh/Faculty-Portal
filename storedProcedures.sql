@@ -21,8 +21,8 @@ language plpgsql;
 
 create or replace function changedHodTriggerUpdate()
 returns TRIGGER as $$
-declare
 begin
+    update leaves set positionid = new.facultyId where leavestatus != 'rejected' and leavestatus != 'accepted' and positionid = old.facultyId;
     insert into historyOfHod(departmentName, facultyId, startTime, endTime) values (old.DepartName, old.facultyId, old.startTime, now());
     return new;
 end;
@@ -35,6 +35,7 @@ create or replace function changedHodTriggerDelete()
 returns TRIGGER as $$
 declare
 begin
+    update leaves set positionid = new.facultyId where leavestatus != 'rejected' and leavestatus != 'accepted' and positionid = old.facultyId;
     insert into historyOfHod(departmentName, facultyId, startTime, endTime) values (old.DepartName, old.facultyId, old.startTime, now());
     return old;
 end;
@@ -97,6 +98,7 @@ returns TRIGGER as $$
 declare
 
 begin
+    update leaves set positionid = new.facultyId where position = old.position and leavestatus != 'rejected' and leavestatus != 'accepted' and positionid = old.facultyId;
     insert into historyOfCrossCut(facultyId, position, startTime, endTime) values (old.facultyId, old.position, old.startTime, now());
     return new;
 end;
@@ -109,13 +111,15 @@ returns TRIGGER as $$
 declare
 
 begin
+    update leaves set positionid = new.facultyId where position = old.position and leavestatus != 'rejected' and leavestatus != 'accepted' and positionid = old.facultyId;
     insert into historyOfCrossCut(facultyId, position, startTime, endTime) values (old.facultyId, old.position, old.startTime, now());
     return old;
 end;
 $$
 language plpgsql;
 
-
+-- drop trigger CrossChangeLog1 on crossFaculty;
+-- drop trigger CrossChangeLog2 on crossFaculty;
 
 
 create TRIGGER CrossChangeLog1

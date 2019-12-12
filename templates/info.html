@@ -65,6 +65,20 @@
             {% endfor %}
         {% endif %}
     </div>
+    <div class="col-md-4">
+        <div class="content-section">
+            <h3>Options</h3>
+                <ul class="list-group">
+                    <li ><a href="{{ url_for('showFaculty') }}">Show Faculty </a></li>
+                    <li ><a href="{{ url_for('showHod') }}">Show HODs </a></li>
+                    <li ><a href="{{ url_for('showCrossCut') }}">Show Cross Cut Faculty </a></li>
+                    <li ><a href="{{ url_for('show_history_hod') }}">Show History of HOD </a></li>
+                    <li ><a href="{{ url_for('show_history_cross') }}">Show History of Cross Cut Faculty </a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+    {% if pos != "Director" %}
     <button class = "button1" onclick="document.getElementById('popleave').style.display='block'">Create Leave</button> 
         {% with messages = get_flashed_messages()%}
                 {% if messages %}
@@ -82,14 +96,18 @@
          <p>Reason(comment) : <input type="text" name="cm" required="required" /></p>
          <p><input type = "submit" value = "submit" /></p>
         </form>
+    
     </div>
+    
         <form action = "{{url_for('my_leaves')}}" method = "post">
          <p><input type="hidden" name="id" value = {{info.email}} readonly></p>
          <p><input type = "submit" class="button1" value = "leaveslist" /></p>
         </form>
-    
+    {% endif %}
+    {% if pos %}
         <form action = "{{url_for('req_leaves')}}" method = "post">
          <p><input type="hidden" name="id" value = {{info.email}} readonly></p>
          <input class="button1" type = "submit" value = "requested leaves" />
         </form>
+    {% endif %}
 {% endblock %}

@@ -21,7 +21,6 @@ gsk = {
 def global_init():
     mongoengine.register_connection(alias='chor', name='faculty')
 
-pss = "123456789"
 try:
     conn = psycopg2.connect(database = "project", user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432")
     print("Opened database successfully")
@@ -36,7 +35,6 @@ app.secret_key = "super secret key"
 
 
 def connectgs():
-    global pss
     return psycopg2.connect(database = "project", user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432")
 
 def get_next_member_id(reqid,pth):
@@ -323,6 +321,8 @@ def forward():
     cntr = 0
     if(nextmem[0]=='$' or nextmem =="$") :
         print('can not forward')
+    elif (nextmem[0]=='7' or nextmem == '7') :
+        print("path position and member position are not matching","error")
     else :
         cur.execute('update leaves set leavestatus = \'requested\',positionid = \'{}\',position=\'{}\',lastupdated=now() where id = {}'.format(nextmem,pos,lid))
         cntr=1
@@ -455,6 +455,7 @@ def admin():
             if state.find_account_by_email(email).Department != dept:
                 return render_template('admin.html', path = state.getPath(), error1='Faculty Should be of same department')
             #cur.execute("select changeHod(%s, %s)", (str(dept), str(email)))
+            
             cur.execute("select changeHod(%s, %s)", (dept, email))
             #cur.execute("select changeHod('{}', '{}')".format(str(request.form['CHOD']), str(email)))
             cur.close()
@@ -751,6 +752,29 @@ def show_history_cross():
     return render_template('showHistoryOfCrossCut.html', **locals())
 
 
+@app.route('/show_approved_leaves',methods=['GET','POST'])
+def show_approved_leaves():
+    fid = []
+    fid.append(request.args.get('type'))
+    fid.append(request.args.get('type2'))
+    con = connectgs()
+    cur = con.cursor()
+    print(fid)
+    cur.execute("select distinct leaveid,commenterid from comments where commenterid = '{}' and commenterpos = '{}'".format(fid[1],fid[0]))
+    rows = cur.fetchall()
+    print(rows)
+    rav = []
+    for r in rows:
+        l = r[0]
+        print(l)
+        cur.execute("select * from leaves where id = {} and (leavestatus=\'accepted\' or leavestatus=\'rejected\') and position = \'{}\'".format(l,fid[0]))
+        # print(cur.fetchall())
+        if(cur.rowcount==1):
+            fnt = cur.fetchone()
+            rav.append([fnt[1],fnt[2],fnt[0]])
+            print(fnt, rav)
+    return render_template('approved.html',posts=rav)
+
 
 if __name__ == '__main__':
     global_init()
@@ -763,5 +787,5 @@ if __name__ == '__main__':
     
     
     if not state.isPathSet():
-        state.savePath('hod->dean->director')
+        state.savePath('hod->deanra->director')
     app.run(debug=True)

@@ -5,6 +5,11 @@
 {% for r in posts %}
     <div>
         <table>
+
+            <tr>
+                <th>Comment</th>
+                <td>{{r[1]}} </td>
+            </tr>
             <tr>
                 <th>Commentor</th>
                 <td>{{r[3]}} </td>
@@ -20,6 +25,8 @@
                 <th>Time</th>
                 <td>{{r[4]}} </td>
             </tr>
+
+
         </table>
     </div>    
 {%endfor%}

@@ -14,12 +14,14 @@
             <th>ID</th>
             <th>departname</th>
             <th>starttime</th>
+            <th>show approveds</th>
         </tr>
         {% for x in items %}
             <tr>
                 <td>{{x[0]}}</td>
                 <td>{{x[1]}}</td>
                 <td>{{x[2]}}</td>
+                <td><a href="{{url_for('show_approved_leaves',type='hod',type2 = x[0])}}">link</a></td>
             </tr>
         {% endfor %} 
     </table> 
